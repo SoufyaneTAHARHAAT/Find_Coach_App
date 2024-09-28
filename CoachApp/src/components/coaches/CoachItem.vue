@@ -6,27 +6,25 @@
             <base-badge v-for="area in areas" :key="area" :type="area" :title="area"></base-badge>
         </div>
         <div class="actions">
-            <base-button :link="true" :to="coachContactLink" mode="outline">Contact</base-button>
-            <base-button :link="true" :to="coachDetailsLink">View Details</base-button>
+            <base-button link :to="coachContactLink" mode="outline">Contact</base-button>
+            <base-button link :to="coachDetailsLink">View Details</base-button>
         </div>
     </li>
 </template>
 
 <script>
-import BaseBadge from '../ui/BaseBadge.vue';
 export default {
-  components: { BaseBadge },
     props: ['id', 'firstName', 'lastName', 'hourlyRate', 'areas'],
 
     computed: {
         fullName() {
-            return this.firstName+ ' '+this.lastName;
+            return this.firstName + ' '+ this.lastName;
         },
         coachContactLink() {
-            return '/coaches/' +this.id+ '/contact';
+            return this.$route.path +'/'+this.id+ '/contact';
         },
         coachDetailsLink() {
-            return '/coaches/' +this.id;
+            return this.$route.path + '/'+ this.id;
         }
     }
 }

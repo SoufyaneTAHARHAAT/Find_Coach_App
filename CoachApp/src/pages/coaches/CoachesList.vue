@@ -1,5 +1,4 @@
 <template>
-  <section>Filter</section>
   <section>
     <base-card>
       <div class="controls">
@@ -24,6 +23,7 @@
 
 <script>
 import CoachItem from '../../components/coaches/CoachItem.vue';
+
 export default {
   components: { CoachItem },
   computed: {
