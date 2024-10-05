@@ -46,6 +46,10 @@ export default {
             areas: [],
         };
     },
+    computed: {
+    isCoach() {
+      return this.$store.getters["coaches/isCoach"];
+    }},
     methods: {
         submitData() {
             const submittedData = {
@@ -55,7 +59,8 @@ export default {
                 rate: this.rate,
                 areas: this.areas
             }
-            console.log(submittedData);
+            this.$emit("save-data", submittedData);
+            console.log(this.isCoach);
         }
     }
 }
