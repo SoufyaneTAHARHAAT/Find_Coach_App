@@ -10,4 +10,5 @@ export default {
         };
         context.commit("registerCoach", data);
     },
+    
 };
