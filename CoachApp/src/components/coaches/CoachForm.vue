@@ -1,26 +1,26 @@
 <template>
     <form @submit.prevent="submitData">
-        <div class="form-control" :class="{ invalid: !this.firstname.isValid}">
+        <div class="form-control" :class="{invalid: !firstname.isValid}">
             <label for="firstname">Firstname</label>
             <input type="text" id="firstname" v-model.trim="firstname.val">
-            <p v-if="!this.firstname.isValid">Please enter a firstname.</p>
+            <p v-if="!firstname.isValid">Please enter a firstname.</p>
         </div>
-        <div class="form-control" :class="{ invalid: !this.lastname.isValid}">
+        <div class="form-control" :class="{invalid: !lastname.isValid}">
             <label for="lasttname">Lastname</label>
             <input type="text" id="lastname" v-model.trim="lastname.val">
-            <p v-if="!this.lastname.isValid">Please enter a lastname.</p>
+            <p v-if="!lastname.isValid">Please enter a lastname.</p>
         </div>
-        <div class="form-control" :class="{ invalid: !this.description.isValid}">
+        <div class="form-control" :class="{invalid: !description.isValid}">
             <label for="description">Description</label>
             <textarea id="description" rows="10" v-model.trim="description.val"></textarea>
-            <p v-if="!this.description.isValid">Please enter a description.</p>
+            <p v-if="!description.isValid">Please enter a description.</p>
           </div>
-        <div class="form-control" :class="{ invalid: !this.rate.isValid}">
+        <div class="form-control" :class="{invalid: !rate.isValid}">
             <label for="rate">Hourly Rate</label>
             <input type="number" id="rate" value="5" v-model.number="rate.val">
-            <p v-if="!this.rate.isValid">Please a valid rate.</p>
+            <p v-if="!rate.isValid">Please enter a rate greater than zero.</p>
         </div>
-        <div class="form-control" :class="{ invalid: !this.areas.isValid}">
+        <div class="form-control" :class="{invalid: !areas.isValid}">
             <h3>Areas Of Expertise</h3>
             <div>
                 <input type="checkbox" id="frontend" value="frontend" v-model="areas.val">
@@ -34,9 +34,9 @@
                 <input type="checkbox" id="career" value="career" v-model="areas.val">
                 <label for="career">Career Advisory</label>
             </div>
-            <p v-if="!this.areas.isValid">At least one expertise must be selected.</p>
+            <p v-if="!areas.isValid">At least one expertise must be selected.</p>
         </div> 
-        <p>Please fix the above errors then submit again.</p>
+        <p v-if="!formIsValid">Please fix the above errors then submit again.</p>
         <base-button>Register</base-button>
     </form>
 </template>
@@ -75,6 +75,12 @@ export default {
     methods: {
       validateForm() {
         this.formIsValid= true;
+        this.firstname.isValid=true;
+        this.lastname.isValid=true;
+        this.description.isValid=true;
+        this.rate.isValid=true;
+        this.areas.isValid=true;
+
         if(this.firstname.val==='') {
           this.firstname.isValid=false;
           this.formIsValid=false;
@@ -92,13 +98,13 @@ export default {
           this.formIsValid=false;
         }
         if(this.areas.val.length===0) {
-          this.firstname.isValid=false;
+          this.areas.isValid=false;
           this.formIsValid=false;
         }
       },
-        submitData() {
+      submitData() {
         this.validateForm();
-        if(!this.isValid) {
+        if(!this.formIsValid) {
           return;
         }
             const submittedData = {
@@ -109,8 +115,15 @@ export default {
                 areas: this.areas.val,
             }
             this.$emit("save-data", submittedData);
-            console.log(this.isCoach);
         }
+    },
+    mounted() {
+      console.log(`firstname : ${this.firstname.isValid}`);
+      console.log(`lastname : ${this.lastname.isValid}`);
+      console.log(`description : ${this.description.isValid}`);
+      console.log(`rate : ${this.rate.isValid}`);
+      console.log(`areas : ${this.areas.isValid}`);
+
     }
 }
 </script>
