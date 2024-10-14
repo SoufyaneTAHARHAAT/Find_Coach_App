@@ -2,36 +2,36 @@
     <form @submit.prevent="submitData">
         <div class="form-control" :class="{invalid: !firstname.isValid}">
             <label for="firstname">Firstname</label>
-            <input type="text" id="firstname" v-model.trim="firstname.val">
+            <input type="text" id="firstname" v-model.trim="firstname.val" @blur="clearValidity(firstname)">
             <p v-if="!firstname.isValid">Please enter a firstname.</p>
         </div>
         <div class="form-control" :class="{invalid: !lastname.isValid}">
             <label for="lasttname">Lastname</label>
-            <input type="text" id="lastname" v-model.trim="lastname.val">
+            <input type="text" id="lastname" v-model.trim="lastname.val" @blur="clearValidity(lastname)">
             <p v-if="!lastname.isValid">Please enter a lastname.</p>
         </div>
         <div class="form-control" :class="{invalid: !description.isValid}">
             <label for="description">Description</label>
-            <textarea id="description" rows="10" v-model.trim="description.val"></textarea>
+            <textarea id="description" rows="10" v-model.trim="description.val" @blur="clearValidity(description)"></textarea>
             <p v-if="!description.isValid">Please enter a description.</p>
           </div>
         <div class="form-control" :class="{invalid: !rate.isValid}">
             <label for="rate">Hourly Rate</label>
-            <input type="number" id="rate" value="5" v-model.number="rate.val">
+            <input type="number" id="rate" value="5" v-model.number="rate.val" @blur="clearValidity(rate)">
             <p v-if="!rate.isValid">Please enter a rate greater than zero.</p>
         </div>
         <div class="form-control" :class="{invalid: !areas.isValid}">
             <h3>Areas Of Expertise</h3>
             <div>
-                <input type="checkbox" id="frontend" value="frontend" v-model="areas.val">
+                <input type="checkbox" id="frontend" value="frontend" v-model="areas.val" @blur="clearValidity(areas)">
                 <label for="frontend">Frontend Development</label>
             </div>
             <div>
-                <input type="checkbox" id="backend" value="backend" v-model="areas.val">
+                <input type="checkbox" id="backend" value="backend" v-model="areas.val" @blur="clearValidity(areas)">
                 <label for="backend">Backend Development</label>
             </div>
             <div>
-                <input type="checkbox" id="career" value="career" v-model="areas.val">
+                <input type="checkbox" id="career" value="career" v-model="areas.val" @blur="clearValidity(areas)">
                 <label for="career">Career Advisory</label>
             </div>
             <p v-if="!areas.isValid">At least one expertise must be selected.</p>
@@ -73,6 +73,9 @@ export default {
       return this.$store.getters["coaches/isCoach"];
     }},
     methods: {
+      clearValidity(input) {
+        input.isValid=true;
+      },
       validateForm() {
         this.formIsValid= true;
         this.firstname.isValid=true;
