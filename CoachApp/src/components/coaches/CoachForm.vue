@@ -120,14 +120,6 @@ export default {
             this.$emit("save-data", submittedData);
         }
     },
-    mounted() {
-      console.log(`firstname : ${this.firstname.isValid}`);
-      console.log(`lastname : ${this.lastname.isValid}`);
-      console.log(`description : ${this.description.isValid}`);
-      console.log(`rate : ${this.rate.isValid}`);
-      console.log(`areas : ${this.areas.isValid}`);
-
-    }
 }
 </script>
 
