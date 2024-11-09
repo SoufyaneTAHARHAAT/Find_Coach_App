@@ -8,10 +8,6 @@ export default {
     isCoach(_, getters, _2, rootGetters) {
         const coaches = getters.coaches;
         const userId = rootGetters.userId;
-        const res = coaches.some(coach => {
-            coach.id===userId
-        });
-        console.log(res+" user");
         return coaches.some(coach => {
             coach.id===userId
         });

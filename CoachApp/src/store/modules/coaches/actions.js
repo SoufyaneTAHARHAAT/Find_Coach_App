@@ -3,7 +3,7 @@ import axios from "axios";
 export default {
     async registerCoach(context, payload) {
         const userId = context.rootGetters.userId;
-        const data = {
+        const formattedCoach = {
             firstName: payload.first,
             lastName: payload.last,
             areas: payload.areas,
@@ -11,7 +11,7 @@ export default {
             hourlyRate: payload.rate,
         };
         try {
-            await axios.put(`https://find-coach-app-38f67-default-rtdb.firebaseio.com/coaches/${userId}.json`, {data});
+            await axios.put(`https://find-coach-app-38f67-default-rtdb.firebaseio.com/coaches/${userId}.json`, {formattedCoach});
         }
         catch(error) {
             console.error("Error sending data to database", error);
@@ -19,7 +19,7 @@ export default {
 
         context.commit("registerCoach", {
             id: userId,
-            ...data,
+            ...formattedCoach,
         });        
     },
 
@@ -28,14 +28,13 @@ export default {
             const response = await axios.get('https://find-coach-app-38f67-default-rtdb.firebaseio.com/coaches.json');
             const coachesLoaded = [];
             for (const id in response.data) {
-                //console.log(response.data[id].firstName);
                 const loadedCoach = {
                     id: id,
-                    firstName: response.data[id].firstName || '',
-                    lastName: response.data[id].lastName || '',
-                    areas: response.data[id].areas || [],
-                    description: response.data[id].description || '',
-                    hourlyRate: response.data[id].hourlyRate || 0,
+                    firstName: response.data[id].formattedCoach.firstName || '',
+                    lastName: response.data[id].formattedCoach.lastName || '',
+                    areas: response.data[id].formattedCoach.areas || [],
+                    description: response.data[id].formattedCoach.description || '',
+                    hourlyRate: response.data[id].formattedCoach.hourlyRate || 0,
                 }
                 coachesLoaded.push(loadedCoach);
             }
