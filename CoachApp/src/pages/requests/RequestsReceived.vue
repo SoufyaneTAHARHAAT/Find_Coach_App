@@ -30,6 +30,14 @@ export default {
         return this.$store.getters['requests/hasRequests'];
     }
   },
+  methods: {
+    fetchRequests() {
+      this.$store.dispatch("requests/fetchRequests");
+    }
+  },
+  created() {
+    this.fetchRequests();
+  }
 };
 </script>
 
